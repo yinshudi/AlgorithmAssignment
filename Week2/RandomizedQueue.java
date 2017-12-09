@@ -1,3 +1,9 @@
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import edu.princeton.cs.algs4.StdRandom;
+
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item[] items;
@@ -5,7 +11,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // construct an empty randomized queue
     public RandomizedQueue() {
-        items = (Item[])new Object[2];
+        items = (Item[]) new Object[2];
         n = 0;
     }
 
@@ -60,7 +66,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
-        return new RandomIterator<Item>();
+        return new RandomIterator();
+    }
+
+    public void resize(int newSize) {
+        if (newSize < 0) {
+            throw new IllegalArgumentException("newSize must larger than zero");
+        }
+
+        Item[] newItems = (Item[]) new Object[newSize];
+        for (int i = 0; i < n; i++) {
+            newItems[i] = items[i];
+        }
+        items = newItems;
     }
 
     // unit testing (optional)
@@ -68,13 +86,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     }
 
-    //每个迭代器都新建一个大小为 n 的数组保存下标, 然后将下标打乱
-    private class RandomIterator<Item> implements Iterator {
+    // 每个迭代器都新建一个大小为 n 的数组保存下标, 然后将下标打乱
+    private class RandomIterator implements Iterator<Item> {
 
         private int[] indices;
-        private int cur; //indices当前下标
+        private int cur; // indices当前下标
 
-        public void RandomIterator(){
+        public RandomIterator() {
             indices = new int[n];
             for (int i = 0; i < n; i++) {
                 indices[i] = i;

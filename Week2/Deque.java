@@ -112,7 +112,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return an iterator over items in order from front to end
     public Iterator<Item> iterator() {
-        return new DequeIterator<Item>();
+        return new DequeIterator();
     }
 
     // unit testing (optional)
@@ -161,7 +161,7 @@ public class Deque<Item> implements Iterable<Item> {
         private Node<Item> next;
     }
 
-    private class DequeIterator<Item> implements Iterator {
+    private class DequeIterator implements Iterator<Item> {
         private Node<Item> curNode = first;
 
         public boolean hasNext() {
