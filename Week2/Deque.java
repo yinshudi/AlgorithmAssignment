@@ -8,6 +8,7 @@
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
@@ -111,26 +112,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return an iterator over items in order from front to end
     public Iterator<Item> iterator() {
-        return new Iterator<Item>() {
-
-            private Node<Item> curNode = first;
-
-            public boolean hasNext() {
-                return curNode != null && curNode.next != null;
-            }
-
-            public Item next() {
-                if (isEmpty() || !hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                curNode = curNode.next;
-                return curNode.item;
-            }
-
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new DequeIterator<Item>();
     }
 
     // unit testing (optional)
@@ -177,5 +159,25 @@ public class Deque<Item> implements Iterable<Item> {
         private Item item;
         private Node<Item> prev;
         private Node<Item> next;
+    }
+
+    private class DequeIterator<Item> implements Iterator {
+        private Node<Item> curNode = first;
+
+        public boolean hasNext() {
+            return curNode != null && curNode.next != null;
+        }
+
+        public Item next() {
+            if (isEmpty() || !hasNext()) {
+                throw new NoSuchElementException();
+            }
+            curNode = curNode.next;
+            return curNode.item;
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
